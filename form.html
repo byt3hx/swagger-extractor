@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swagger API Tester</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" rel="stylesheet"/>
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        h2 {
+            margin-bottom: 20px;
+        }
+        .form-control {
+            border-radius: 0.375rem;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+            padding: 10px 20px;
+            margin-top: 15px;
+            border-radius: 0.375rem;
+            box-shadow: 0 3px 6px rgba(0,123,255,.5);
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+        .list-group-item {
+            background-color: #f7f7f7;
+            margin-top: 5px;
+            border-radius: 0.375rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container shadow-sm p-4 mb-5 bg-white rounded">
+        <h2 class="text-center">Swagger API Tester</h2>
+        <form method="post" action="/submit" class="needs-validation" novalidate>
+            <div class="form-group mb-3">
+                <label for="swaggerurl">Swagger URL:</label>
+                <input type="text" class="form-control" name="swaggerurl" id="swaggerurl" required>
+                <div class="invalid-feedback">
+                    Please enter the Swagger URL.
+                </div>
+            </div>
+            <div class="form-group mb-3">
+                <label for="baseurl">Base URL:</label>
+                <input type="text" class="form-control" name="baseurl" id="baseurl" required>
+                <div class="invalid-feedback">
+                    Please enter the Base URL.
+                </div>
+            </div>
+            <div class="form-group mb-3">
+                <label for="proxyurl">Proxy URL:</label>
+                <input type="text" class="form-control" name="proxyurl" id="proxyurl">
+            </div>
+            <div class="form-group mb-3">
+                <label for="headers">Headers (optional):</label>
+                <textarea class="form-control" name="headers" id="headers" rows="4"></textarea>
+            </div>
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">Test API</button>
+            </div>
+        </form>
+
+        <div class="results mt-5" style="display: {{if .Results}}block{{else}}none{{end}}">
+            <h3>Results:</h3>
+            <ul class="list-group">
+                {{range .Results}}
+                    <li class="list-group-item">{{.}}</li>
+                {{end}}
+            </ul>
+        </div>
+    </div>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+    (function () {
+      'use strict'
+      var forms = document.querySelectorAll('.needs-validation')
+      Array.prototype.slice.call(forms)
+        .forEach(function (form) {
+          form.addEventListener('submit', function (event) {
+            if (!form.checkValidity()) {
+              event.preventDefault()
+              event.stopPropagation()
+            }
+            form.classList.add('was-validated')
+          }, false)
+        })
+    })()
+    </script>
+</body>
+</html>
